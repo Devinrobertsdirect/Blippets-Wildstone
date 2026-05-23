@@ -1,0 +1,6 @@
+dex,slug,name,type1,type2,hp,atk,def,spAtk,spDef,spd,rarity,abilities,learnset,evolves_into,evolve_level,description
+1,flamoo,Flamoo,fire,,55,65,45,40,50,55,common,blaze;thick-hide,1:tackle;1:ember;7:flame-charge;13:headbutt,emburn,16,"A calf with a smoldering mane. Warms its herd on cold nights."
+2,mosskit,Mosskit,dark,grass,50,55,40,70,55,75,uncommon,leaf-veil;keen-eye,1:scratch;1:razor-leaf;6:shadow-sneak;12:haze,,,"A shadow-dwelling kit cloaked in moss. Glides between branches."
+3,axoltule,Axoltule,water,crystal,75,50,80,55,75,30,uncommon,sturdy;hydration,1:water-gun;1:harden;8:mud-shot;14:crystal-shard,,,"A gentle axolotl that carries a crystal-encrusted shell drawn from cave pools."
+4,amerex,Amerex,psychic,crystal,60,75,55,85,60,65,rare,prism-mind;crystal-armor,1:confusion;1:crystal-shard;10:psybeam;16:prism-beam,,,"Floating amethysts orbit its skull, refracting its thoughts into raw force."
+5,silfing,Silfing,water,dragon,65,60,55,70,70,60,uncommon,torrent;serene-grace,1:water-gun;1:twister;7:bubble-beam;13:dragon-breath,,,"A juvenile dragon of shallow lagoons. Hums when content."

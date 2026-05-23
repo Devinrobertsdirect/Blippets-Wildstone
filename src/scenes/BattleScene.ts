@@ -60,12 +60,15 @@ export class BattleScene extends Phaser.Scene {
       .setOrigin(0.5)
       .setDisplaySize(110, 110);
 
-    // Player platform + sprite
+    // Player platform + sprite (use dedicated back-view art if present, else flip the front).
     this.add.ellipse(110, GAME_HEIGHT - 70, 150, 36, 0x4d6a3c, 0.55);
-    this.playerSprite = this.add.image(110, GAME_HEIGHT - 95, this.state.player.species.spriteKey)
+    const backKey = `${this.state.player.species.spriteKey}-back`;
+    const hasBack = this.textures.exists(backKey);
+    this.playerSprite = this.add.image(110, GAME_HEIGHT - 95,
+      hasBack ? backKey : this.state.player.species.spriteKey)
       .setOrigin(0.5)
       .setDisplaySize(130, 130)
-      .setFlipX(true);
+      .setFlipX(!hasBack);
 
     // Enemy HUD card
     this.drawEnemyCard();

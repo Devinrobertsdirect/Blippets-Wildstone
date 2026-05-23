@@ -32,6 +32,22 @@ export interface Evolution {
   level: number;
 }
 
+export interface LearnsetEntry {
+  level: number;
+  moveId: string;
+}
+
+export interface SpeciesSprites {
+  /** Battle front sprite path (relative to public/). Always set; may not exist on disk yet. */
+  front: string;
+  /** Player-side back view. Set only when the file exists. */
+  back?: string;
+  /** Pokedex/menu icon. Set only when the file exists. */
+  icon?: string;
+  /** Rare color variant. Set only when the file exists. */
+  shiny?: string;
+}
+
 export interface BlippetSpecies {
   dex: number;
   slug: string;
@@ -40,10 +56,14 @@ export interface BlippetSpecies {
   baseStats: BaseStats;
   rarity: Rarity;
   abilities: string[];
+  /** Moves learned by level. Source of truth for what a Blippet can know. */
+  learnset: LearnsetEntry[];
+  /** All unique move IDs in the learnset (derived). */
   movePool: string[];
   evolution?: Evolution;
   description: string;
   spriteKey: string;
+  sprites: SpeciesSprites;
 }
 
 export interface Blippet {

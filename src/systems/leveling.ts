@@ -23,13 +23,23 @@ export function computeStats(species: BlippetSpecies, level: number): BaseStats 
   };
 }
 
-export function pickStartingMoves(species: BlippetSpecies, max = 4): MoveDef[] {
-  return species.movePool.slice(0, max).map(getMove);
+export function movesAtLevel(species: BlippetSpecies, level: number, max = 4): MoveDef[] {
+  const learned = species.learnset
+    .filter(e => e.level <= level)
+    .sort((a, b) => a.level - b.level)
+    .map(e => e.moveId);
+  const unique = [...new Set(learned)];
+  const chosen = unique.slice(-max); // keep the most recently learned moves
+  if (chosen.length === 0) {
+    const fallback = species.movePool[0] ?? 'tackle';
+    return [getMove(fallback)];
+  }
+  return chosen.map(getMove);
 }
 
 export function instantiate(species: BlippetSpecies, level: number, nickname?: string): Blippet {
   const stats = computeStats(species, level);
-  const moves = pickStartingMoves(species);
+  const moves = movesAtLevel(species, level);
   const movePP: Record<string, number> = {};
   for (const m of moves) movePP[m.id] = m.pp;
   return {

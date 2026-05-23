@@ -31,7 +31,8 @@ src/
   main.ts                    Phaser bootstrap
   types/                     TypeScript interfaces (Blippet, Move, Battle)
   data/
-    blippets.ts              All 5 starter species (will grow to 150)
+    blippets.ts              Re-exports generated species + lookup helpers
+    blippets.generated.ts    AUTO-GENERATED from data/blippets.csv (do not edit)
     moves.ts                 Move definitions
     types.ts                 Type chart + colors (incl. custom Crystal type)
     test-map.ts              Hardcoded overworld tilemap
@@ -51,13 +52,22 @@ src/
 public/
   blippets/                  Drop PNG sprites here (see README inside)
 assets-raw/                  Original-quality source artwork (not shipped)
+data/
+  blippets.csv               Master roster — edit this, then `npm run gen:blippets`
+scripts/
+  gen-blippets.ts            CSV -> generated TS + validator
 ```
 
 ## Adding a new Blippet
 
-1. Drop the PNG into `public/blippets/blippet-<slug>.png`
-2. Add a record to `SPECIES` in `src/data/blippets.ts`
-3. Reference `spriteKey: 'blippet-<slug>'`
+The data is generated from a CSV — you never hand-edit TypeScript species records.
+
+1. Add a row to `data/blippets.csv` (stats, types, learnset, evolution — see `data/README.md`)
+2. Drop the art into `public/blippets/{dex}_{slug}_{type1}[-{type2}].png` (see `public/blippets/README.md`)
+3. Run `npm run gen:blippets` (also runs automatically on `npm run dev`)
+
+`npm run validate` checks the whole roster for typos, dupes, unknown moves, and
+mismatched art before you commit.
 
 ## Architecture philosophy (carried from the Unity spec)
 

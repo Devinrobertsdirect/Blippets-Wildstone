@@ -1,23 +1,47 @@
-# Blippet sprites
+# Blippet sprites — drop your PNGs here
 
-Drop PNG illustrations here using the convention:
+## Filename convention
 
 ```
-{spriteKey}.png
+{dex}_{slug}_{type1}[-{type2}].png
 ```
 
-The `spriteKey` for each species is defined in `src/data/blippets.ts`. Current keys:
+- `dex` — 3-digit zero-padded Pokédex number (`001`, `042`, `150`)
+- `slug` — must match the `slug` column in `data/blippets.csv`
+- `type1` / `type2` — must match the types in the CSV (validator cross-checks)
 
-- `blippet-flamoo.png`
-- `blippet-mosskit.png`
-- `blippet-axoltule.png`
-- `blippet-amerex.png`
-- `blippet-silfing.png`
+### Examples (the 5 starters)
 
-If a file is missing, the engine generates a colored placeholder using the
-species' primary type color, so the game still runs.
+```
+001_flamoo_fire.png
+002_mosskit_dark-grass.png
+003_axoltule_water-crystal.png
+004_amerex_psychic-crystal.png
+005_silfing_water-dragon.png
+```
 
-## Recommended source format
+## Optional variants
 
-- Square PNG (1024×1024 is fine — it's downscaled at render time)
-- Transparent background preferred; solid background works but looks off in battle
+Same base name with an `@tag` suffix. Only added if the file exists — no
+broken requests if you skip them.
+
+```
+003_axoltule_water-crystal@back.png    player-side back view (else front is flipped)
+003_axoltule_water-crystal@icon.png    64×64 Pokédex icon (else front is downscaled)
+003_axoltule_water-crystal@shiny.png   rare color variant
+```
+
+## Source format
+
+- Square PNG. **512×512 recommended** (1024 works but bloats load time).
+- Transparent background strongly preferred — solid backgrounds look boxy in battle.
+
+## After uploading
+
+```bash
+npm run validate    # confirms every file matches a CSV row and types line up
+npm run dev
+```
+
+Missing art? The engine renders a colored placeholder (primary-type color) so
+the game still runs. Keep original full-res art in `assets-raw/blippets/`.

@@ -11,8 +11,13 @@ export class PreloadScene extends Phaser.Scene {
 
   preload(): void {
     // Try real sprites; fall back to placeholders generated in create().
+    // Variant textures are only requested when the generator confirmed the
+    // file exists (sprites.back/icon/shiny), so we never fire dead 404s.
     for (const s of SPECIES) {
-      this.load.image(s.spriteKey, `blippets/${s.spriteKey}.png`);
+      this.load.image(s.spriteKey, s.sprites.front);
+      if (s.sprites.back) this.load.image(`${s.spriteKey}-back`, s.sprites.back);
+      if (s.sprites.icon) this.load.image(`${s.spriteKey}-icon`, s.sprites.icon);
+      if (s.sprites.shiny) this.load.image(`${s.spriteKey}-shiny`, s.sprites.shiny);
     }
     this.load.on('loaderror', (file: Phaser.Loader.File) => {
       console.warn(`[preload] missing asset: ${file.key} — using placeholder`);
