@@ -1,0 +1,25 @@
+{
+  "name": "blippets-wildstone",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "predev": "npm run gen:blippets",
+    "dev": "vite",
+    "prebuild": "npm run gen:blippets",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "gen:blippets": "tsx scripts/gen-blippets.ts",
+    "scaffold:csv": "tsx scripts/scaffold-csv.ts",
+    "validate": "tsx scripts/gen-blippets.ts --check",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "phaser": "^3.80.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10"
+  }
+}
