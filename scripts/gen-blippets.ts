@@ -86,6 +86,9 @@ function main(): void {
     ? new Set(readdirSync(ART_DIR).filter(f => f.toLowerCase().endsWith('.png')))
     : new Set<string>();
 
+  // Reserved engine art: dex 000 "Noblip", the universal missing-art fallback.
+  const RESERVED_ART = new Set(['noblip.png', 'noblip-back.png']);
+
   const seenDex = new Map<number, string>();
   const seenSlug = new Set<string>();
   const slugs = new Set<string>();
@@ -166,6 +169,7 @@ function main(): void {
 
   // Orphan art (warn-only)
   for (const f of artFiles) {
+    if (RESERVED_ART.has(f.toLowerCase())) continue;
     if (!knownArt.has(f)) warnings.push(`Orphan art file public/blippets/${f} (no matching CSV row)`);
   }
 

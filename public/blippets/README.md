@@ -36,6 +36,20 @@ broken requests if you skip them.
 - Square PNG. **512×512 recommended** (1024 works but bloats load time).
 - Transparent background strongly preferred — solid backgrounds look boxy in battle.
 
+## Noblip — the missing-art fallback (dex 000)
+
+Two reserved files act as the universal stand-in (our MissingNo) shown for any
+Blippet whose art file doesn't exist yet:
+
+```
+noblip.png         front view (winking)
+noblip-back.png    player-side back view
+```
+
+Until these exist, the engine draws a procedural glitch sprite in their place,
+so the game always runs. Drop the real PNGs here (512×512) and every art-less
+Blippet immediately uses Noblip instead.
+
 ## After uploading
 
 ```bash
@@ -43,5 +57,6 @@ npm run validate    # confirms every file matches a CSV row and types line up
 npm run dev
 ```
 
-Missing art? The engine renders a colored placeholder (primary-type color) so
-the game still runs. Keep original full-res art in `assets-raw/blippets/`.
+Missing art? Every such Blippet renders as **Noblip** (real art if present,
+otherwise the procedural glitch). Keep original full-res art in
+`assets-raw/blippets/`.
