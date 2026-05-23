@@ -89,6 +89,7 @@ function main(): void {
   const seenDex = new Map<number, string>();
   const seenSlug = new Set<string>();
   const slugs = new Set<string>();
+  const knownArt = new Set<string>();
   const species: BlippetSpecies[] = [];
 
   for (const row of rows.slice(1)) {
@@ -140,11 +141,14 @@ function main(): void {
     const pad = String(dex).padStart(3, '0');
     const typePart = type2raw ? `${type1}-${type2raw}` : type1;
     const frontFile = `${pad}_${slug}_${typePart}.png`;
-    const sprites: SpeciesSprites = { front: `blippets/${frontFile}` };
+    knownArt.add(frontFile);
+    for (const tag of ['back', 'icon', 'shiny']) knownArt.add(variantPath(frontFile, tag));
+    const sprites: SpeciesSprites = {};
+    if (artFiles.has(frontFile)) sprites.front = `blippets/${frontFile}`;
+    else warnings.push(`[${slug}] no art yet — expected public/blippets/${frontFile} (placeholder will render)`);
     if (artFiles.has(variantPath(frontFile, 'back'))) sprites.back = `blippets/${variantPath(frontFile, 'back')}`;
     if (artFiles.has(variantPath(frontFile, 'icon'))) sprites.icon = `blippets/${variantPath(frontFile, 'icon')}`;
     if (artFiles.has(variantPath(frontFile, 'shiny'))) sprites.shiny = `blippets/${variantPath(frontFile, 'shiny')}`;
-    if (!artFiles.has(frontFile)) warnings.push(`[${slug}] no art yet — expected public/blippets/${frontFile} (placeholder will render)`);
 
     species.push({
       dex, slug, name: get('name'), types, baseStats, rarity,
@@ -161,14 +165,8 @@ function main(): void {
   }
 
   // Orphan art (warn-only)
-  const known = new Set<string>();
-  for (const s of species) {
-    const base = s.sprites.front.replace('blippets/', '');
-    known.add(base);
-    for (const tag of ['back', 'icon', 'shiny']) known.add(variantPath(base, tag));
-  }
   for (const f of artFiles) {
-    if (!known.has(f)) warnings.push(`Orphan art file public/blippets/${f} (no matching CSV row)`);
+    if (!knownArt.has(f)) warnings.push(`Orphan art file public/blippets/${f} (no matching CSV row)`);
   }
 
   for (const w of warnings) console.warn(`  warn: ${w}`);

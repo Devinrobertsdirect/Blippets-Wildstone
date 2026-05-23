@@ -10,6 +10,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "gen:blippets": "tsx scripts/gen-blippets.ts",
+    "scaffold:csv": "tsx scripts/scaffold-csv.ts",
     "validate": "tsx scripts/gen-blippets.ts --check",
     "typecheck": "tsc --noEmit"
   },

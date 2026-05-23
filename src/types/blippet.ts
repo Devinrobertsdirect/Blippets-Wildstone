@@ -38,8 +38,8 @@ export interface LearnsetEntry {
 }
 
 export interface SpeciesSprites {
-  /** Battle front sprite path (relative to public/). Always set; may not exist on disk yet. */
-  front: string;
+  /** Battle front sprite path (relative to public/). Set only when the file exists. */
+  front?: string;
   /** Player-side back view. Set only when the file exists. */
   back?: string;
   /** Pokedex/menu icon. Set only when the file exists. */
